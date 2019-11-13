@@ -1,0 +1,227 @@
+%&main
+%
+% main.tex
+% --------
+%
+% Quick-Start
+% -----------
+% 1. To create the document, run e.g. "pdflatex main.tex", all other files will
+%    be included automatically using the "\input" command.
+%
+% 2. You can also use the Makefile to generate the document. This requires
+%    additional programs to be installed and most likely only works on Linux.
+%    See README for further instructions.
+%
+% 3. The preamble, source files and resources should be in the according
+%    folders (include,src,res) the subfolders are self-explanatory.
+%
+% 4. It is imperative that two people do not work on the same file at once when
+%    using Dropbox, otherwise you _will_ experience data loss.
+%
+% -----------------------------------------------------------------------------
+%
+% This preset is still under active development and I'd be glad to receive
+% questions, feedback and suggestions.
+%
+% -----------------------------------------------------------------------------
+%
+% Copyright (C) 2014  Claudio Vellage (claudio.vellage@latex-tutorial.com)
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+% -----------------------------------------------------------------------------
+%
+% Include: Header (Preamble)
+% --------------------------
+% The header file contains the preamble of the LaTeX document. All
+% customizations go into this file to keep the the document clean and easy to
+% maintain.
+%
+% If you're not using subversion, you maybe want to check out the section:
+% "custom headers" in this file. It is less prone to accidental overwrites.
+%
+\input{include/header.tex}
+
+% These macros are used in the statement to set several dates and names related
+% to the assignment.
+%
+% The due date of the report can be set like this: 
+%
+%   \newcommand{\city}{Berlin}
+%
+\newcommand{\city}{} % city
+\newcommand{\dueData}{} % due date
+\newcommand{\university}{} % university
+\newcommand{\department}{} % department
+\newcommand{\mySubject}{} % subject
+\newcommand{\reportNo}{} % number of experiment
+\newcommand{\reportName}{} % name of experiment
+\newcommand{\reportDate}{} % date of experiment
+\newcommand{\participants}{} % participants
+\newcommand{\supervisor}{} % supervisor
+
+% 
+% Titlepage settings
+% ------------------
+% These settings are used by the \maketitle command and are set by macros by
+% default.
+%
+\titlehead{
+  \university{}\\
+  \fakulty{}
+} 
+\title{\reportName{}} % Name of report
+\subject{\mySubject{}} % Subject
+\date{\reportDate{}} % Date (Set by Macro)
+\author{\participants{}} % Authors (Set by Macro)
+\publishers{\supervisor{}} % Publishers or supervisor (Set by Macro)
+
+% -----------------------------------------------------------------------------
+%
+% BEGIN OF DOCUMENT
+% -----------------
+% This is the section containing the actual text of the document. The default
+% structure of this section looks like this:
+%
+% main.tex
+% -titlepage.tex (Title)
+% -intro.tex (Introduction)
+% -methods.tex (Methods)
+% -results.tex (Results)
+% -discussion.tex (Discussion)
+% -Bibliography (Bibliography)
+% -Appendix (Appendix)
+% --listings.tex (Listings)
+% --tables.tex (Tables)
+% --figures.tex (Figures)
+% statement.tex (Statement)
+%
+\begin{document}
+\pagenumbering{gobble}
+% Titlepage
+% ---------
+% This usually contains the line \maketitle, a custom titlepage or imports a
+% .pdf file.
+%
+\input{src/titlepage.tex}
+
+%
+% Table of Contents
+% -----------------
+% I prefer roman page numbering for the table of contents. Comment this out if
+% you prefer arabic numbering. The pagecounter is reset to 1 for the rest of
+% the document.
+%
+\tableofcontents
+\pagenumbering{roman}
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%
+% Abstract
+% --------
+% Uncomment and put your abstract in this section if you need one.
+%
+%\begin{abstract}
+%  
+%\end{abstract}
+%\newpage
+
+%
+% Introduction
+% ------------
+% This section includes the intention of this document. In case of lab reports
+% it usually contained a brief explanation of the experiment.
+%
+\section{Introduction}
+\input{src/intro.tex}
+
+%
+% Methods
+% -------
+% This part usually contains the theoretical background necessary to solve the
+% assignments in the lab reports. For research papers, this would be called 
+% related works.
+%
+\section{Methods}
+\input{src/methods.tex}
+
+%
+% Results
+% -------
+% All results, measurements, solutions to assignments and whatnot go here. This
+% is the main part of the document.
+%
+\section{Results}
+\input{src/results.tex}
+
+%
+% Discussion
+% ----------
+% Contains a discussion of the results, errors and applications to real world
+% situations.
+%
+\section{Discussion}
+\input{src/discussion.tex}
+\newpage
+
+%
+% Bibliography
+% ------------
+% All cited books and other materials are stored in main.bib and imported here.
+% Refer to the BiBTeX documentation to get an idea how this works.
+% 
+\bibliography{main}
+\bibliographystyle{ieeetr}
+\newpage
+
+%
+% Appendix
+% --------
+% Listings, tables, figures and statement go here. Especially when too large.
+%
+\begin{appendix}
+  %
+  % Listings
+  % --------
+  %
+  \section{Listings} 
+  \input{src/appendix/listings.tex}
+  
+  %
+  % Tables
+  % ------
+  %
+  \section{Tables}
+  \input{src/appendix/tables.tex}
+
+  %
+  % Figures
+  % -------
+  %
+  \section{Figures}
+  \input{src/appendix/figures.tex}
+
+  %
+  % Statement
+  % ---------
+  % We state that we created this document ourselves and only using the listed
+  % sources.
+  %
+  %\section{Statement}
+  %\input{src/appendix/statement.tex}
+
+\end{appendix}
+\end{document}

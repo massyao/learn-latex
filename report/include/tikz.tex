@@ -1,0 +1,34 @@
+\documentclass{standalone}
+%
+% Tikz/pgfplots customizations
+% ----------------------------
+\usepackage{tikz} % Create graphics in LaTeX
+\usepackage[european]{circuitikz} % Create electric circuits in latex
+\usetikzlibrary{calc,arrows,shapes} % A few useful shapes for tikz
+
+% This is a hack to get volt- and ammeters without an arrow. (Replacement for
+% the default circuitikz meters)
+\tikzset{component/.style={
+  draw,
+  thick,
+  circle,
+  fill=white,
+  minimum size=0.75cm,
+  inner sep=0pt}}
+
+\usepackage{pgf} % Create graphics in latex
+\usepackage{pgfplots} % Create plots in latex (can read .csv files)
+\pgfplotsset{compat=newest} % Better customization of plots
+\usepgfplotslibrary{units} % Set units for axes in plots
+
+% -----------------------------------------------------------------------------
+
+\usepackage{siunitx} % Supreme typesetting of units
+\sisetup{
+  exponent-to-prefix  = true,
+  round-mode          = places, 
+  round-precision     = 2,
+%  scientific-notation = engineering, % Use multiples of 3 as exponent
+  locale=DE, % Typeset numbers and units the German way
+  output-complex-root=\ensuremath{\mathrm{j}} % Change complex i to j
+}

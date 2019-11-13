@@ -1,0 +1,120 @@
+% header.tex
+% ----------
+% Contains the preamble of the document and all customizations.
+%
+% -----------------------------------------------------------------------------
+%
+% Copyright (C) 2014  Claudio Vellage (claudio.vellage@latex-tutorial.com)
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+% -----------------------------------------------------------------------------
+%
+
+% The scrartcl documentclass provides easier customization compared to the
+% default article class. For more information read the KOMA-Script manual.
+%
+\documentclass[a4paper,12pt,notitlepage,numbers=noenddot]{scrartcl}
+
+%
+% Libraries
+% ---------
+% A short explanation is given behind this, so you can decide whether you need
+% a certain library or not. (More libraries in pgf/tikz section)
+%
+\usepackage[english]{babel} % Hyphenation for us english
+\usepackage[]{amsmath} % Environments to typeset math
+\usepackage[utf8]{inputenc} % Support for Unicode
+\usepackage[]{geometry} % Allows to change the layout of a page
+\usepackage{graphicx} % Optional arguments for \includegraphics
+\usepackage{latexsym} % Defines a few more characters
+\usepackage{sectsty} % Allows to change the layout of section headings
+\usepackage{float} % Float commands (e.g. to force position of figure [H])
+\usepackage{setspace} % Allows to change the linespacing
+\usepackage{tabularx} % Extended tabular environment
+\usepackage{cite} % Citations
+\usepackage{hyperref} % Support for hyperlinks
+\usepackage{booktabs} % Includes \toprule, \midrule etc. to make nice tables
+\usepackage{enumitem} % Make bullet lists and more (e.g. \begin{itemize})
+\usepackage{listings} % Beautiful listings
+\usepackage{trfsigns} % Symbols for transformations (e.g. Laplace transform)
+\usepackage{caption} % Captions for figures
+\usepackage{subcaption} % Support for subfigures (pictures side-by-side etc.)
+\usepackage{multirow} % Support for multirow headings in tables
+\usepackage{nicefrac} % Alternative to \frac{}{} useful for inline fractions
+\usepackage{lmodern} % Use enhanced version fo Computer Modern
+\usepackage{pdfpages} % Include pdf files
+\usepackage{pgfplotstable} % Automatic generation of tables (can read .csv)
+
+%
+% Layout customizations
+% ---------------------
+\geometry{a4paper,left=25mm,right=30mm, top=2cm, bottom=3cm} % Page layout 
+\onehalfspacing % Linespacing
+\allsectionsfont{\sffamily} % Set font for sections
+\setitemize{noitemsep,parsep=0pt,partopsep=0pt} % Linespacing for "itemize"
+\floatstyle{plain} % No boxes around figures
+\newfloat{code}{H}{myc} % New float setting for code
+\renewcommand\lstlistingname{Listing} % Changes listings name if require
+\setlength{\parindent}{0mm} % Don't indent paragraphs
+
+% -----------------------------------------------------------------------------
+
+%
+% Tikz/pgfplots customizations
+% ----------------------------
+\usepackage{tikz} % Create graphics in LaTeX
+\usepackage[european]{circuitikz} % Create electric circuits in latex
+\usetikzlibrary{calc,arrows,shapes} % A few useful shapes for tikz
+
+% This is a hack to get volt- and ammeters without an arrow. (Replacement for
+% the default circuitikz meters)
+\tikzset{component/.style={
+  draw,
+  thick,
+  circle,
+  fill=white,
+  minimum size=0.75cm,
+  inner sep=0pt}}
+
+\usepackage{pgf} % Create graphics in latex
+\usepackage{pgfplots} % Create plots in latex (can read .csv files)
+\usepackage{pgfplotstable} % Automatic generation of tables (can read .csv)
+\pgfplotsset{compat=newest} % Better customization of plots
+\usepgfplotslibrary{units} % Set units for axes in plots
+
+% -----------------------------------------------------------------------------
+
+\usepackage{siunitx} % Supreme typesetting of units
+\sisetup{
+  exponent-to-prefix  = true,
+  round-mode          = places, 
+  round-precision     = 2,
+%  scientific-notation = engineering, % Use multiples of 3 as exponent
+  locale=DE, % Typeset numbers and units the German way
+  output-complex-root=\ensuremath{\mathrm{j}} % Change complex i to j
+}
+
+% -----------------------------------------------------------------------------
+
+%
+% Additional Includes
+% -------------------
+% If multiple users work on a single document, it happens that some users need
+% additional libraries. To avoid conflicts, people should declare their
+% packages in a seperate file, so changes are not overwritten if two users
+% change the header at the same time. (This _will_ happen in Dropbox)
+%
+%\input{include/user1.tex}
+%\input{include/user2.tex}

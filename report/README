@@ -1,0 +1,83 @@
+% Report Template - www.latex-tutorial.com
+% ----------------------------------------
+% This is an extensible preset to create well-structured LaTeX documents which
+% can be edited by multiple people at the same time (e.g. using SVN). I have
+% optimized the structure of the document for maximum productivity and included
+% the packages which I found most useful.
+%
+% The key feature of this layout is, that all parts go into seperate files and
+% are then included using the \input{} command of latex.
+%
+% Initially, this preset has been designed to write lab reports for several
+% subjects at the "Faculty of Electrical Engineering and Information Technology
+% Otto-von-Guericke-University Magdeburg", so the default structure is not
+% suited to write a scientific paper. I translated most parts of this document
+% to english.
+%
+% I think that by carefully reading the instructions given in this file, the
+% file structure makes sense and can easily be adapted to your specific needs.
+%
+% -----------------------------------------------------------------------------
+%
+% Quick-Start
+% -----------
+% 1. To create the document, run e.g. "pdflatex main.tex", all other files will
+%    be included automatically using the "\input" command.
+%
+% 2. You can also use the Makefile to generate the document. This requires
+%    additional programs to be installed and most likely only works on Linux.
+%    See README for further instructions.
+%
+% 3. The preamble, source files and resources should be in the according
+%    folders (include,src,res) the subfolders are self-explanatory.
+%
+% 4. It is imperative that two people do not work on the same file at once when
+%    using Dropbox, otherwise you _will_ experience data loss. 
+%
+% -----------------------------------------------------------------------------
+%
+% Using the Makefile
+% ------------------
+% In order to use the Makefile, you must install ghostscript and pdfcrop. The
+% makefiles uses several features to speed up document compilation such as a
+% precompiled preamble.
+%
+% You can furthermore place tikz plots in the folder 'src/tikz'. Each plot must
+% be in a different file such as (src/tikz/example.tex):
+%
+% --BEGIN CODE--
+%
+%   %&tikz
+%
+%   \begin{document}
+%     % PLOT CODE GOES HERE
+%   \end{document}
+%
+% --END CODE--
+%
+% It is imperative to have the statement '%&tikz' on the first line, this is
+% required to include the precompiled preamble for tikz plots.
+%
+% If you have any questions regarding this feature, please write me an email 
+% since I've taken down my blog, which featured an explanation and I didn't
+% have time to put it back online.
+%
+% -----------------------------------------------------------------------------
+%
+% Copyright (C) 2014  Claudio Vellage (claudio.vellage@latex-tutorial.com)
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+%
+% -----------------------------------------------------------------------------
+%
