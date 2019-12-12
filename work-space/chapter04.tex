@@ -1,0 +1,146 @@
+% --------------------------------
+% -------  chapter 4  ------------
+% --------------------------------
+\maketitle
+\newpage
+
+\begin{figure}
+  \caption{Dummy figure}
+\end{figure}
+\begin{table}
+  \caption{Dummy table}
+\end{table}
+
+
+\maketitle
+\newpage
+\section{Table of Contents}
+  \textbf{LaTeX offers features to automatically generate a table of contents, a list of figures and a list of tables. Learn here how to use them.}
+  \begin{enumerate} % list_type 有 enumerate、 itemize 和 description
+    \item Table of contents
+    \item List of figures
+    \item Depth
+    \item Spacing
+  \end{enumerate} 
+  \subsection{Table of contents}
+    Generating a table of contents can be done with a few simple commands. LaTeX will use the section headings to create the table of contents and there are commands to create a list of figures and a list of tables as well. I will give a small example code to create a table of contents first:
+
+    %  lstlisting verbatim minted
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      \documentclass{article}
+
+      \begin{document}
+      
+      \tableofcontents
+      \newpage
+      
+      \section{Section}
+      
+      Dummy text
+      
+      \subsection{Subsection}
+      
+      Dummy text
+      
+      \end{document}
+    \end{lstlisting}
+
+    After compiling the .tex file two times, you will get the following table of contents:
+  
+  \subsection{List of figures / tables}
+    The generation of a list of figures and tables works the same way. I added a dummy figure and table and put the lists in the appendix of my document:
+    
+    %  lstlisting verbatim minted
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      \begin{document}
+      ...
+      \begin{figure}
+        \caption{Dummy figure}
+      \end{figure}
+      
+      \begin{table}
+        \caption{Dummy table}
+      \end{table}
+      ...
+      \begin{appendix}
+        \listoffigures
+        \listoftables
+      \end{appendix}
+      
+      \end{document}
+    \end{lstlisting}
+
+      After compiling two times again, the lists will be generated like this:
+
+    \subsection{Depth}
+      Sometimes it makes sense to only show a subset of the headings 
+      for all sections or for a particular section. For this reason 
+      you can set a the tocdepth by using the command \textbackslash setcounter{tocdepth}{X}, where X is the desired depth. A value of 0 means that your table of contents will show nothing at all and 5 means, that even subparagraphs will be shown. The value has to be set in the preamble of your document and automatically applies to the whole document:
+    %  lstlisting verbatim minted
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      % ...
+
+      \setcounter{tocdepth}{1} % Show sections
+      %\setcounter{tocdepth}{2} % + subsections
+      %\setcounter{tocdepth}{3} % + subsubsections
+      %\setcounter{tocdepth}{4} % + paragraphs
+      %\setcounter{tocdepth}{5} % + subparagraphs
+      
+      \begin{document}
+      %...
+      \tableofcontents
+      %...
+      \end{document}
+    \end{lstlisting}
+
+    Using the example from above, the setting tocdepth = 1 will lead to the following output:
+    If you don't want to change the depth for all sections, you can also adjust the tocdepth for each section individually. In this case you don't have to set the tocdepth before the section which should have more or less depth.
+
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      %...
+      \begin{document}
+      %...
+      \addtocontents{toc}{\setcounter{tocdepth}{1}} % Set depth to 1
+      \section{Another section}
+      \subsection{Subsection}
+      \subsubsection{Subsubsection}
+      %...
+      \addtocontents{toc}{\setcounter{tocdepth}{3}} % Reset to default (3)
+      \end{document}
+    \end{lstlisting}
+     This will generate the following table of contents, using the default tocdepth for the first section, but tocdepth = 1 for this section:
+
+  \subsection{Spacing}
+    If you're not happy with the spacing of the headings in your table of content, the easiest way of changing the spacing of your table of contents (and document in general) is by using the setspace package. First add \textbackslash usepackage{setspace} to your preamble:
+     %  lstlisting verbatim minted
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      %...
+      \usepackage{setspace}
+      %...
+      \begin{document}
+      %...
+    \end{lstlisting}
+ 
+    You can then proceed to set the spacing for individual parts of your document, including the table of contents like so:
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      %...
+      \begin{document}
+      %...
+      \doublespacing
+      \tableofcontents
+      \singleplacing
+      %...
+    \end{lstlisting}
+ 
+    You can then proceed to set the spacing for individual parts of your document, including the table of contents like so:
+
+
+    \paragraph{Summary}
+    % list
+    \begin{itemize} % list_type 有 enumerate、 itemize 和 description
+      \item Autogenerate a table of content using \textbackslash tableofcontents
+      \item Create lists of your figures and tables with \textbackslash listoffigures and \textbackslash listoftables
+      \item Always compile twice to see the changes
+      \item Globally change the depth with \begin{verbatim} \setcounter{tocdepth}{X}; X = {1,2,3,4,5} \end{verbatim} 
+      \item For single sections use \begin{verbatim} \addtocontents{toc}{\setcounter{tocdepth}{X}} \end{verbatim}  instead.
+    \end{itemize} 
