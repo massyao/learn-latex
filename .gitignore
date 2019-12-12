@@ -11,3 +11,7 @@ latex-quick-start-tutorial.toc
 *.bib
 *.out
 *.toc
+*.bcf
+*.lof
+*.lot
+*.aux
