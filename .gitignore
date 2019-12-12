@@ -8,7 +8,6 @@ latex-quick-start-tutorial-blx.bib
 latex-quick-start-tutorial.out
 latex-quick-start-tutorial.toc
 *.xml
-*.bib
 *.out
 *.toc
 *.bcf
