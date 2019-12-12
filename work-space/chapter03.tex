@@ -1,0 +1,48 @@
+% --------------------------------
+% -------  chapter 3  ------------
+% --------------------------------
+\maketitle
+\newpage
+
+\section{Figure or Picture}
+\textbf{Learn how to insert images and caption them. 
+  Examples for a single figure, and multiple figures 
+  next to each other, using the subfigure environment.}
+\subsection{Captioned images / figures in LaTeX}
+From time to time, it's necessary to add pictures
+ to your documents. Using LaTeX all pictures will 
+ be indexed automatically and tagged with successive
+  numbers when using the \textit{figure environment}  and the graphicx package.
+
+  %  lstlisting verbatim minted
+
+  \begin{lstlisting}[language={[LaTeX]TeX},caption=figures in \LaTeX{},breaklines=true,frame=single]
+    % \begin{verbatim}
+      \documentclass{article}
+  
+      \usepackage{graphicx}
+      
+      \begin{document}
+      
+      \begin{figure}
+        \includegraphics[width=\linewidth]{boat.jpg}
+        \caption{A boat.}
+        \label{fig:boat1}
+      \end{figure}
+      
+      Figure \ref{fig:boat1} shows a boat.
+      \end{document}
+    % \end{verbatim}
+    \end{lstlisting}
+
+
+
+  \begin{figure}
+    \includegraphics[width=1.0\textwidth]{picture}
+    \caption{This figure shows the logo of my website.}
+  \end{figure}  
+
+\subsection{Image positioning / setting the float}
+\subsection{Multiple images / subfigures in LaTeX}
+
+\end{document}

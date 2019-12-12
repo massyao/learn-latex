@@ -1,0 +1,305 @@
+% --------------------------------
+% -------  chapter 2  ------------
+% --------------------------------
+\maketitle
+\newpage
+
+\section{LaTeX Math Symbols - A glossary}
+An overview of commonly used math symbols in LaTeX with a sandbox to try them out immediately in your browser.
+
+Since LaTeX offers a large amount of features, it's hard to remember all commands. Even though commands follow a logical naming scheme, you will probably need a table for the most common math symbols at some point. You can play around with the commands shown here in the sandbox below and insert your equation into your LaTeX document. I don't want to provide a complete list of LaTeX symbols on this website. The ctan alreadyprovides a huge list with currently 5913 symbols, which you can download here. Instead I'm trying to limit this list to the most common math symbols and commands. If you think I forgot some very important basic function or symbol here, please let me know.
+
+\subsection{List of common LATEX math symbols}
+Trigonometric functions
+Integrals
+Matrices
+Dots
+Miscellaneous functions
+Sandbox
+
+
+
+
+\subsubsection{Trigonometric functions}
+The symbols for trigonometric functions have a very straightforward naming scheme. Just precede the common abbreviations with a backslash \textbackslash and put your variables in braces.
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule  %添加表格头部粗线
+Name &	Symbol &	Command\\
+\midrule  %添加表格中横线
+Sine &  $\sin x$ & \textbackslash sin x \\
+Cosine &  $\cos x$ & \textbackslash cos x \\
+Tangent &  $\tan x$ & \textbackslash tan x \\
+Cotangent &  $\cot x$ & \textbackslash cot x\\
+Secant &  $\sec x$ & \textbackslash sec x \\
+Cosecant &  $\csc x$ & \textbackslash csc x\\
+\bottomrule %添加表格底部粗线
+\end{tabular}
+\end{center}
+
+
+
+
+\subsubsection{Integrals}
+LaTeX offers math symbols for various kinds of integrals out of the box.
+Note that you can set the integral boundaries by using the underscore \_ and 
+circumflex \^ symbol as seen below.
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule  %添加表格头部粗线
+Name&	Symbol&	Command\\
+\midrule  %添加表格中横线
+Indefinite integral & $\int f(x) dx$ & \textbackslash int f(x) dx \\
+Definite integral & $\int_a^b f(x) x$ & \textbackslash int\_{} a\^{} b f(x) x \\
+Domain integral &  $\int_D f(x) dx$ & \textbackslash int\_{} D f(x) dx \\
+Double integral & $\iint f(x,y) dx dy$ & \textbackslash iint f(x,y) dx dy \\
+Triple integral & $\iiint f(x,y,z) dx dy dz$ & \textbackslash iiint f(x,y,z) dx dy dz \\
+Closed curve integral & $\oint_C F ds$ & \textbackslash oint\_{} C F ds \\
+\bottomrule %添加表格底部粗线
+\end{tabular}
+\end{center}
+
+
+
+\subsubsection{Matrices}
+Of course LaTeX is able to typeset matrices as well. 
+For this purpose LaTeX offers the following environments. 
+Columns are separated with ampersand \& and rows with a double backslash \textbackslash\textbackslash (the linebreak command). Make sure that the number of ampersands is the same for every row.
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule  %添加表格头部粗线
+Name&	Symbol&	Command\\
+\midrule  %添加表格中横线
+Matrix 
+  & $\begin{matrix}1&0\\1&0\end{matrix}$ 
+  & \textbackslash begin\textbackslash\{matrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{matrix\} \\
+\\
+bMatrix 
+  & $\begin{bmatrix}1&0\\1&0\end{bmatrix}$ 
+  & \textbackslash begin\textbackslash\{bmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{bmatrix\} \\
+\\
+pMatrix 
+  & $\begin{pmatrix}1&0\\1&0\end{pmatrix}$ 
+  & \textbackslash begin\textbackslash\{pmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{pmatrix\} \\
+\\
+vMatrix 
+  & $\begin{vmatrix}1&0\\1&0\end{vmatrix}$ 
+  & \textbackslash begin\textbackslash\{vmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{vmatrix\} \\
+\\
+Determinant 
+  & $\det{\begin{vmatrix}1&0\\1&0\end{vmatrix}}$ 
+  & \textbackslash det\{\textbackslash begin\{vmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{vmatrix\}\} \\
+\bottomrule %添加表格底部粗线
+\end{tabular}
+\end{center}
+If you want to typeset very large matrices, the following commands can become in handy as well.
+
+
+
+
+\subsubsection{Dots}
+The most common dot symbols used in math notation are available in LaTeX as well.
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule  %添加表格头部粗线
+Name&	Symbol&	Command\\
+\midrule  %添加表格中横线
+Middot \/ Centered dot
+  & $\cdot$
+  & \textbackslash cdot\\
+\\
+Horizontal Dots \/ Centered dots 
+  & $\cdots$
+  & \textbackslash cdots\\
+\\
+Vertical Dots 
+  & $\vdots$
+  & \textbackslash vdots\\
+\\
+Diagonal Dots 
+  & $\ddots$
+  & \textbackslash ddots\\
+\\
+Lower Dots 
+  & $\ldots$
+  & \textbackslash ldots\\
+\bottomrule %添加表格底部粗线
+\end{tabular}
+\end{center}
+
+matrix     
+$\begin{bmatrix}
+  1 & 0 & \cdots & 0\\
+  1 & 0 & \cdots & 0\\
+  \vdots & \vdots & \ddots & \vdots \\
+  1 & 0 & 0 & 0
+  \end{bmatrix}$, 
+  \\
+  code will be ,\\
+  \textbackslash begin\{bmatrix\}
+  1 \& 0 \& \textbackslash cdots \& 0 \textbackslash\textbackslash
+  1 \& 0 \& \textbackslash cdots \& 0\textbackslash\textbackslash
+  \textbackslash vdots \& \textbackslash vdots \& \textbackslash ddots \& \textbackslash vdots \textbackslash\textbackslash
+  1 \& 0 \& 0 \& 0
+  \textbackslash end\{bmatrix\}
+
+
+
+  \subsubsection{Matrices}
+  Of course LaTeX is able to typeset matrices as well. 
+  For this purpose LaTeX offers the following environments. 
+  Columns are separated with ampersand \& and rows with a double backslash \textbackslash\textbackslash (the linebreak command). Make sure that the number of ampersands is the same for every row.
+  
+  \begin{center}
+  \begin{tabular}{ccc}
+  \toprule  %添加表格头部粗线
+  Name&	Symbol&	Command\\
+  \midrule  %添加表格中横线
+  Matrix 
+    & $\begin{matrix}1&0\\1&0\end{matrix}$ 
+    & \textbackslash begin\textbackslash\{matrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{matrix\} \\
+  \\
+  bMatrix 
+    & $\begin{bmatrix}1&0\\1&0\end{bmatrix}$ 
+    & \textbackslash begin\textbackslash\{bmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{bmatrix\} \\
+  \\
+  pMatrix 
+    & $\begin{pmatrix}1&0\\1&0\end{pmatrix}$ 
+    & \textbackslash begin\textbackslash\{pmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{pmatrix\} \\
+  \\
+  vMatrix 
+    & $\begin{vmatrix}1&0\\1&0\end{vmatrix}$ 
+    & \textbackslash begin\textbackslash\{vmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{vmatrix\} \\
+  \\
+  Determinant 
+    & $\det{\begin{vmatrix}1&0\\1&0\end{vmatrix}}$ 
+    & \textbackslash det\{\textbackslash begin\{vmatrix\}1\&0 \textbackslash\textbackslash 1\&0\textbackslash end\{vmatrix\}\} \\
+  \bottomrule %添加表格底部粗线
+  \end{tabular}
+  \end{center}
+  If you want to typeset very large matrices, the following commands can become in handy as well.
+  
+  
+  
+  
+  \subsubsection{Miscellaneous Functions}
+  Here are some more basic functions which don't fit in the categories mentioned above.
+  \begin{center}
+  \begin{tabular}{ccc}
+  \toprule  %添加表格头部粗线
+  Name&	Symbol&	Command\\
+  \midrule  %添加表格中横线
+  Logarithmic Function / Logarithm
+    & $\log{x}$
+    & \textbackslash log\{x\}\\
+  \\
+  Logarithm (base a)
+    & $\log_a{b}$
+    & \textbackslash log\_a\{b\}\\
+  \\
+  Square root function / Square root
+    & $\sqrt{x}$
+    & \textbackslash sqrt\{x\}\\
+  \\
+  n-th root function / n-th root
+    & $\sqrt[n]{x}$
+    & \textbackslash sqrt[n]\{x\}\\
+  \\
+  Rational function / Fraction
+    & $\frac{u(x)}{v(x)}$
+    & \textbackslash frac\{u(x)\}\{v(x)\}\\
+  \bottomrule %添加表格底部粗线
+  \end{tabular}
+  \end{center}
+  
+  
+  \subsection{Greek alphabet}
+  Learn the LaTeX commands to display the greek alphabet. A rendered preview of all letters is shown alongside all commands in a nice table.
+  \begin{center}
+  \begin{tabular}{ccc}
+  \toprule  %添加表格头部粗线
+  Name&	Symbol&	Command\\
+  \midrule  %添加表格中横线
+  Alpha	 & $\alpha A$ & \textbackslash alpha A \\
+  Beta	 & $\beta B$ & \textbackslash beta B \\
+  Gamma	 & $\gamma \Gamma $ & \textbackslash gamma \textbackslash Gamma\\
+  Delta	 & $\delta  \Delta $ & \textbackslash delta  \textbackslash Delta\\
+  Zeta	 & $\zeta  Z$ & \textbackslash zeta  Z \\
+  Eta	 & $\eta E$ & \textbackslash eta E \\
+  Theta	 & $\theta \Theta$ & \textbackslash theta \textbackslash Theta \\
+  Iota	 & $\iota I$ & \textbackslash iota I \\
+  Kappa	 & $\kappa K$ & \textbackslash kappa K \\
+  Lambda	 & $\lambda \Lambda$ & \textbackslash lambda \textbackslash Lambda \\
+  Mu	 & $\mu M$ & \textbackslash mu M \\
+  Nu	 & $\nu N$ & \textbackslash nu N \\
+  % Omicron	 & $\omicron O$ & \textbackslash omicron O \\
+  Pi	 & $\pi \Pi$ & \textbackslash pi \textbackslash Pi \\
+  Rho	 & $\rho R$ & \textbackslash rho R \\
+  Sigma	 & $\sigma \Sigma$ & \textbackslash sigma \textbackslash Sigma \\
+  Tau	 & $\tau T$ & \textbackslash tau T \\
+  Upsilon	 & $\upsilon \Upsilon$ & \textbackslash upsilon \textbackslash Upsilon \\
+  Phi	 & $\phi \Phi$ & \textbackslash phi \textbackslash Phi\\
+  Chi	 & $\chi X$ & \textbackslash chi X \\
+  Psi	 & $\psi \Psi$ & \textbackslash psi \textbackslash Psi \\
+  Omega	 & $\omega \Omega$ & \textbackslash omega \textbackslash Omega \\
+  \bottomrule %添加表格底部粗线
+  \end{tabular}
+  \end{center}
+
+  \subsection{Text Formatting}
+    This website provides an overview of basic text
+    formatting commands in LaTeX. Most commands are 
+    very straightforward to use. I personally think
+    there will be few usecases to manually adjust 
+    the settings of the font, because the environments 
+    usually do this job for you automatically, 
+    I just included this for completeness.
+  \subsubsection{Font Size}
+  \begin{center}
+  \begin{tabular}{ccc}
+  \toprule  %添加表格头部粗线
+  Name&	Symbol&	Command\\
+  \midrule  %添加表格中横线
+    Tiny & $ {\tiny Text} $ & \{\textbackslash tiny Text\} \\
+    Small & $ {\small Text} $ & \{\textbackslash small Text\} \\
+    Normal & $ {\normalsize Text} $ & \{\textbackslash normalsize Text\} \\
+    Large & $ {\large Text} $ & \{\textbackslash large Text\} \\
+    Huge & $ {\huge Text} $ & \{\textbackslash huge Text\} \\
+  \bottomrule %添加表格底部粗线
+  \end{tabular}
+  \end{center}
+  \subsubsection{Font Style}
+  \begin{center}
+  \begin{tabular}{ccc}
+  \toprule  %添加表格头部粗线
+  Name&	Symbol&	Command\\
+  \midrule  %添加表格中横线
+    Bold & $ \textbf{Text} $ & \textbackslash textbf\{Text\} \\
+    Italic & $ \textit{Text} $ & \textbackslash textit\{Text\} \\
+    Typewriter & $ \texttt{Text} $ & \textbackslash texttt\{Text\} \\
+    % Sans-Serif & $ \ltexts{fText} $ & \textbackslash ltexts\{fText\} \\
+    Serif (Roman) & $ \textrm{Text} $ & \textbackslash textrm\{Text\} \\
+    Underline & $ \underline{Text} $ & \textbackslash underline\{Text\} \\
+  \bottomrule %添加表格底部粗线
+  \end{tabular}
+  \end{center}
+
+  %  js code to convert code to latex text
+  % const str_replace = str =>{
+  %   return str.replace(/\\/g, '\\textbackslash ')
+  %             .replace(/{/g, '\\{')
+  %             .replace(/}/g, '\\}')
+  %             .replace('&nbsp;', ' ')
+  % }
+  % $$('tr').map(tr_ele => {
+  %   const str1 = tr_ele.childNodes[0].innerHTML
+  %   const str2 = tr_ele.childNodes[2].innerHTML.replace('&nbsp;', ' ')
+  %   const str3 = str_replace(tr_ele.childNodes[2].innerHTML)
+  %   console.log(str1,str2,str3)
+  %   const str = `${str1} & $ ${str2} $ & ${str3} \\\\`
+  %   return str
+  % }).join('\n')
