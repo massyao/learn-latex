@@ -1,0 +1,193 @@
+
+% --------------------------------
+% -------  chapter 5  ------------
+% --------------------------------
+
+\maketitle
+\newpage
+\section{Bibliography}
+  \textbf{Learn how to create a bibliography with Bibtex and Biblatex in a few simple steps. Create references / citations and autogenerate footnotes.}
+  \begin{enumerate} % list_type 有 enumerate、 itemize 和 description
+    \item Creating a .bib file
+    \item Using BibTeX
+    \item Autogenerate footnotes with BibLaTeX
+    \item BibTeX Format
+    \item BibTeX Styles
+  \end{enumerate} 
+    We have looked at many features of LaTeX so far and learned that many things are automated by LaTeX. There are functions to add a table of contents, lists of tables and figures and also several packages that allow us to generate a bibliography. I will describe how to use bibtex and biblatex (both external programs) to create the bibliography. At first we have to create a .bib file, which contains our bibliographic information.
+  
+  \subsection{Creating a .bib file}
+    A .bib file will contain the bibliographic information of our document. I will only give a simple example, since there are many tools to generate the entries automatically. I will not explain the structure of the file itself at this point, since i suggest using a bibtex generator (choose one from google). Our example will contain a single book and look like this:
+    
+    
+    %  lstlisting verbatim minted
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      @BOOK{DUMMY:1,
+      AUTHOR="John Doe",
+      TITLE="The Book without Title",
+      PUBLISHER="Dummy Publisher",
+      YEAR="2100",
+      }
+    \end{lstlisting}
+
+    If you don't want to use a BibTeX generator or a reference management tool like Citavi (which generates BibTeX files automatically for you), you can find more examples of BibTeX formats here.
+  \subsection{Using BibTeX}
+    After creating the bibtex file, we have to tell LaTeX where to find our bibliographic database. For BibTeX this is not much different from printing the table of contents. We just need the commands \textbackslash bibliography which tells LaTeX the location of our .bib file and \textbackslash bibliographystyle which selects one of various bibliographic styles.
+    
+    %  lstlisting verbatim minted
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      \documentclass{article}
+
+      \begin{document}
+      
+      Random citation \cite{DUMMY:1} embeddeed in text.
+      
+      \newpage
+      
+      \bibliography{lesson7a1} 
+      \bibliographystyle{ieeetr}
+      
+      \end{document}
+    \end{lstlisting}
+
+    By using this code, we will obtain something like this:
+    \paragraph{}
+    % Random citation \cite{DUMMY:1} embeddeed in text.
+    Test test test \cite{Lee2009a}
+    \printbibliography
+
+    I named my .bib file lesson7a1.bib, note that I did not enter the .bib extension. For the style, I've choosen the ieeetr style, which is very common for my subject, but there are many more styles available. Which will change the way our references look like. The ieeetr style will mark citations with successive numbers such as [1] in this example. If I choose the style to apalike instead, i will get the following result:
+    
+    
+    \subsection{Autogenerate footnotes in latex using BibLaTeX}
+      The abilities of BibTeX are limited to basic styles 
+      as depicted in the examples shown above. Sometimes 
+      it is necessary to cite all literature in footnotes
+       and maintaining all of them by hand can be a frustrating 
+       task. At this point BibLaTeX kicks in and does the work 
+       for us. The syntax varies a bit from the first document. 
+       We now have to include the biblatex package and use the 
+       \textbackslash autocite and \textbackslash printbibliography
+        command. It is crucial to move the \textbackslash bibliography{lesson7a1}
+         statement to the preamble of our document:
+    
+      \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+        \documentclass{article}
+
+        \usepackage[backend=bibtex,style=verbose-trad2]{biblatex}
+        \bibliography{lesson7a1} 
+        
+        \begin{document}
+        
+        Random citation \autocite[1]{DUMMY:1} embeddeed in text.
+        
+        \newpage
+        
+        \printbibliography
+        
+        \end{document}
+    \end{lstlisting}
+
+    The \textbackslash autocite command generates the footnotes 
+    and we can enter a page number in the brackets 
+    \textbackslash autocite[1]{DUMMY:1} will generate 
+    a footnote like this:
+
+    \paragraph{}
+    For BibLaTeX we have to choose the citation style on package inclusion with:
+    
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      \usepackage[backend=bibtex,style=verbose-trad2]{biblatex}
+    \end{lstlisting}
+
+    The backend=bibtex part makes sure to use BibTeX instead of 
+    Biber as our backend, since Biber fails to work in some 
+    editors like TeXworks. It took me a while to figure out 
+    how to generate footnotes automatically, because the sources 
+    I found on the internet, didn't mention this at all.
+     This will generate the following table of contents,
+      using the default tocdepth for the first section, 
+      but tocdepth = 1 for this section:
+
+
+  \subsection{BibTeX Formats}
+    This is not meant to be a comprehensive list of BibTeX formats, but rather give you an idea of how to cite various sources properly. If you're interested in an extensive overview of all BibTeX formats, I suggest you to check out the resources on Wikibooks.
+    
+    \textbf{Article}
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      @ARTICLE{ARTICLE:1,
+        AUTHOR="John Doe",
+        TITLE="Title",
+        JOURNAL="Journal",
+        YEAR="2017",
+      }
+    \end{lstlisting}
+ 
+    \textbf{Book}
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      @BOOK{BOOK:1,
+        AUTHOR="John Doe",
+        TITLE="The Book without Title",
+        PUBLISHER="Dummy Publisher",
+        YEAR="2100",
+      }
+    \end{lstlisting}
+
+    \textbf{Inbook (specific pages)}
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      @INBOOK{BOOK:2,
+        AUTHOR="John Doe",
+        TITLE="The Book without Title",
+        PUBLISHER="Dummy Publisher",
+        YEAR="2100",
+        PAGES="100-200",
+      }
+    \end{lstlisting}
+
+
+    \textbf{Website}
+    \begin{lstlisting}[language={[LaTeX]TeX}, breaklines=true,frame=single]
+      @MISC{WEBSITE:1,
+        HOWPUBLISHED = "\url{http://example.com}",
+        AUTHOR = "Intel",
+        TITLE = "Example Website",
+        MONTH = "Dec",
+        YEAR = "1988",
+        NOTE = "Accessed on 2012-11-11"
+      }
+    \end{lstlisting}
+
+  \subsection{BibTeX Styles}
+    Here's a quick overview of some popular styles to use with BibTeX.
+
+    \begin{itemize} % list_type 有 enumerate、 itemize 和 description
+      \item Abbrv
+      \item Alpha
+      \item Apalike
+      \item IEEEtr
+      \item Plain
+    \end{itemize} 
+    I'm trying to keep this list updated with other commonly used styles. If you're missing something here, please let me know.
+
+
+
+    \paragraph{Summary}
+    % list
+    \begin{itemize} % list_type 有 enumerate、 itemize 和 description
+      \item Generate a bibliography with BibTeX and BibLaTeX
+      \item First define a .bib 
+        file using: \textbackslash 
+        bibliography\{BIB\_FILE\_NAME\} 
+        (do not add .bib)
+      \item For BibTeX put the For BibTeX put the \textbackslash bibliography statement
+         in your document, for BibLaTeX in the preamble bibliography 
+         statement in your document, for BibLaTeX in the preamble
+      \item BibTeX uses the \textbackslash bibliographystyle command to set the citation style
+      \item BibLaTeX chooses the style as an option like: 
+        \begin{verbatim} \usepackage[backend=bibtex, style=verbose-trad2]{biblatex} \end{verbatim} 
+      \item BibTeX uses the \textbackslash cite command, while BibLaTeX uses the \textbackslash autocite command
+      \item The \textbackslash autocite command takes the page number as an option: \textbackslash autocite[NUM]\{\}
+    \end{itemize} 
+
+  \maketitle
+  \newpage
