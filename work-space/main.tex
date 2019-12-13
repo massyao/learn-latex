@@ -17,7 +17,17 @@
 \usepackage{siunitx} % Required for alignment
 \usepackage{enumitem} % enumerate can use other order symbol
 \usepackage{multirow} % Required for multirows
+\usepackage{longtable} % To display tables on several pages
+\usepackage{rotating} % To display tables in landscape
+% \usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+% \usepackage{siunitx} % Formats the units and values
+\usepackage{pgfplotstable} % Generates table from .csv
+% \usepackage{siunitx}
+\usepackage{tikz} % To generate the plot from csv
+\usepackage{pgfplots}
 
+\pgfplotsset{compat=newest} % Allows to place the legend below plot
+\usepgfplotslibrary{units} % Allows to enter the units nicely
 
 \addbibresource{ref.bib}  
 
@@ -57,552 +67,179 @@
 % Tables 
 % \input{chapter07.tex}
 
+% Tables from .csv
+% \input{chapter08.tex}
+
+% Plots
+% \input{chapter09.tex}
+
 % --------------------------------
-% -------  chapter 7  ------------
+% -------  chapter 8  ------------
 % --------------------------------
 
 \maketitle
 \newpage
-\section{Tables}
+\section{Plots}
   \textbf{
-    Learn to create tables in LaTeX including all features such as multi row, multi column, multi page and landscape tables. All in one place.
+    The pgfplots package from tikz/pgf enabled you to plot data directly from .csv files in LaTeX.
   }
   \begin{enumerate} % list_type 有 enumerate、 itemize 和 description
-    \item Your first table / table template
-    \item Align numbers at decimal point
-    \item Adding rows and columns
-    \item Cells spanning multiple rows and multiple columns
-      \begin{enumerate}
-        \item Using multirow
-        \item Using multicolumn
-        \item Combining multirow and multicolumn
-      \end{enumerate}
-    \item Prettier tables with booktabs
-    \item Tables spanning multiple pages
-    \item Landscape / sideways tables
-    \item Tables from Excel (.csv) to LaTeX
+    \item Basic plotting
+    \item Packages and setup
   \end{enumerate} 
-  In this tutorial we're going to learn how to use the table and tabular environments to create tables in LaTeX. At first we're going to create a simple table like this:
-  
-  \subsection{Your first table}
+  Visualizing your data is easily done with auto-generated plots using the pgfplots package. It's strongly recommended to read Lesson 9 before, since I will omit some basic statements about .csv files and basically use the same file for my plot.
+
+  \subsection{Basic plotting}
   \paragraph{}
-    Tables in LaTeX can be created through a combination 
-    of the table environment and the tabular environment. 
-    The table environment part contains the caption and 
-    defines the float for our table, i.e. where in our 
-    document the table should be positioned and whether 
-    we want it to be displayed centered. The
-    \textbackslash caption and \textbackslash label commands 
-    can be used in the same way as for pictures. 
-    The actual content of the table is contained 
-    within the tabular environment.
-  
-  \paragraph{}
-  Now let's take a look at some actual code for a basic table, which you can easily copy-and-paste into your document and modify it to your needs.
+  To plot our data, we will use the following code:
 
   \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
     \documentclass{article}
 
+    \usepackage{siunitx}
+    \usepackage{tikz} % To generate the plot from csv
+    \usepackage{pgfplots}
+
+    \pgfplotsset{compat=newest} % Allows to place the legend below plot
+    \usepgfplotslibrary{units} % Allows to enter the units nicely
+
+    \sisetup{
+      round-mode          = places,
+      round-precision     = 2,
+    }
+
     \begin{document}
-    
-    \begin{table}[h!]
+
+    \begin{figure}[h!]
       \begin{center}
-        \caption{Your first table.}
-        \label{tab:table1}
-        \begin{tabular}{l|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-          $\alpha$ & $\beta$ & $\gamma$ \\
-          \hline
-          1 & 1110.1 & a\\
-          2 & 10.1 & b\\
-          3 & 23.113231 & c\\
-        \end{tabular}
+        \begin{tikzpicture}
+          \begin{axis}[
+              width=\linewidth, % Scale the plot to \linewidth
+              grid=major, % Display a grid
+              grid style={dashed,gray!30}, % Set the style
+              xlabel=X Axis $U$, % Set the labels
+              ylabel=Y Axis $I$,
+              x unit=\si{\volt}, % Set the respective units
+              y unit=\si{\ampere},
+              legend style={at={(0.5,-0.2)},anchor=north}, % Put the legend below the plot
+              x tick label style={rotate=90,anchor=east} % Display labels sideways
+            ]
+            \addplot 
+            % add a plot from table; you select the columns by using the actual name in
+            % the .csv file (on top)
+            table[x=column 1,y=column 2,col sep=comma] {table.csv}; 
+            \legend{Plot}
+          \end{axis}
+        \end{tikzpicture}
+        \caption{My first autogenerated plot.}
       \end{center}
-    \end{table}
-    
+    \end{figure}
+
     \end{document}
   \end{lstlisting}
 
   \paragraph{}
-  The above code will print out the table which I've already shown you in the introduction and it looks like this:
-
-  \begin{table}[h!]
-    \begin{center}
-      \caption{First table.}
-      \label{tab:table1}
-      \begin{tabular}{l|c|r} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-        $\alpha$ & $\beta$ & $\gamma$ \\
-        \hline
-        1 & 1110.1 & a\\
-        2 & 10.1 & b\\
-        3 & 23.113231 & c\\
-      \end{tabular}
-    \end{center}
-  \end{table}
-  \paragraph{}
-  While this table already works, it's not very satisfying and readable that the numbers in the center column are not aligned at the decimal point. Fortunately, we don't have to add spacing somehow manually, but we can use the siunitx package for this purpose.
-  
-  \subsection{Align numbers at decimal point}
-  \paragraph{}
-    The first thing we have to do is to include the siunitx
-    package in our preamble and use the command 
-    \textbackslash sisetup to tell the package
-    how many digital places it should display:
-
-   
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \usepackage{siunitx} % Required for alignment
-    
-    \sisetup{
-      round-mode          = places, % Rounds numbers
-      round-precision     = 2, % to 2 places
-    }
-    
-    \begin{document} 
-    
-    %...
-  \end{lstlisting}
-
-
-  \paragraph{}
-  Afterwards we can use a new alignment setting in our tables, so besides left (l), center (c) and right (r), there's now an additional setting S, which will align the numbers automatically. In our previous table, there was an alignment problem with the middle column, so I've now changed the alignment setting of the middle column from (c) to (S):
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \begin{table}[h!]
-      \begin{center}
-        \caption{Table with aligned units.}
-        \label{tab:table1}
-        \begin{tabular}{l|S|r} % <-- Changed to S here.
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-          $\alpha$ & $\beta$ & $\gamma$ \\
-          \hline
-          1 & 1110.1 & a\\
-          2 & 10.1 & b\\
-          3 & 23.113231 & c\\
-        \end{tabular}
-      \end{center}
-    \end{table}
-    
-    %...
-  \end{lstlisting}
-
-  % \usepackage{siunitx} % Required for alignment
+  This plot will show up in our .pdf file after compilation:
   \sisetup{
-    round-mode          = places, % Rounds numbers
-    round-precision     = 2, % to 2 places
+    round-mode          = places,
+    round-precision     = 2,
   }
-
-  \paragraph{}
-  We can now observe, that LaTeX will now properly align the numbers at their decimal points and round the numbers to two decimal places:
-  \begin{table}[h!]
+  \begin{figure}[h!]
     \begin{center}
-      \caption{Table with aligned units.}
-      \label{tab:table2}
-      \begin{tabular}{l|S|r} % \begin{tabular}{l|S|r} <-- Changed to S here.
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-        $\alpha$ & $\beta$ & $\gamma$ \\
-        \hline
-        1 & 1110.1 & a\\
-        2 & 10.1 & b\\
-        3 & 23.113231 & c\\
-      \end{tabular}
+      \begin{tikzpicture}
+        \begin{axis}[
+            width=\linewidth, % Scale the plot to \linewidth
+            grid=major, % Display a grid
+            grid style={dashed,gray!30}, % Set the style
+            xlabel=X Axis $U$, % Set the labels
+            ylabel=Y Axis $I$,
+            x unit=\si{\volt}, % Set the respective units
+            y unit=\si{\ampere},
+            legend style={at={(0.5,-0.2)},anchor=north}, % Put the legend below the plot
+            x tick label style={rotate=90,anchor=east} % Display labels sideways
+          ]
+          \addplot 
+          % add a plot from table; you select the columns by using the actual name in
+          % the .csv file (on top)
+          table[x=column 1,y=column 2,col sep=comma] {resources/plot.csv}; 
+          \legend{Plot}
+        \end{axis}
+      \end{tikzpicture}
+      \caption{My first autogenerated plot.}
     \end{center}
-  \end{table}
+  \end{figure}
 
-  \subsection{Adding rows and columns}
+  \subsection{Packages and setup}
   \paragraph{}
-    Now that we've setup our table properly, we can focus 
-    on adding more rows and columns. As I've mentioned before,
-    LaTeX uses column separators (\&) and row separators 
-    (\textbackslash \textbackslash ) to layout the cells 
-    of our table. For the 5x3 table shown above we can 
-    count five times (\textbackslash \textbackslash ) 
-    behind each row and two times (\&) per row, 
-    separating the content of three columns.
-  \paragraph{}
-  If we now want to add an additional column, it's as simple as copy and pasting the previous column and changing the contents. I will be reusing the table from above for this example and add an additional column:
-  
-  
-   
+  We added the new packages and the following code to generate the plot:
   \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \begin{table}[h!]
+    ...
+    \usepackage{tikz}
+    \usepackage{pgfplots}
+    ...
+    \pgfplotsset{compat=newest}
+    \usepgfplotslibrary{units}
+    ...
+    \begin{figure}[h!]
       \begin{center}
-        \caption{More rows.}
-        \label{tab:table1}
-        \begin{tabular}{l|S|r}
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-          $\alpha$ & $\beta$ & $\gamma$ \\
-          \hline
-          1 & 1110.1 & a\\
-          2 & 10.1 & b\\
-          3 & 23.113231 & c\\
-          4 & 25.113231 & d\\ % <-- added row here
-        \end{tabular}
+        \begin{tikzpicture}
+          \begin{axis}[
+              width=\linewidth, % Scale the plot to \linewidth
+              grid=major, 
+              grid style={dashed,gray!30},
+              xlabel=X Axis $U$, % Set the labels
+              ylabel=Y Axis $I$,
+              x unit=\si{\volt}, % Set the respective units
+              y unit=\si{\ampere},
+              legend style={at={(0.5,-0.2)},anchor=north},
+              x tick label style={rotate=90,anchor=east}
+            ]
+            \addplot 
+            % add a plot from table; you select the columns by using the actual name in
+            % the .csv file (on top)
+            table[x=column 1,y=column 2,col sep=comma] {table.csv}; 
+            \legend{Plot}
+          \end{axis}
+        \end{tikzpicture}
+        \caption{My first autogenerated plot.}
       \end{center}
-    \end{table}
-    
-    %...
+    \end{figure}
+    ...
   \end{lstlisting}
   \paragraph{}
-  This will generate the following output:
-  \begin{table}[h!]
-    \begin{center}
-      \caption{More rows.}
-      \label{tab:table1}
-      \begin{tabular}{l|S|r}
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-        $\alpha$ & $\beta$ & $\gamma$ \\
-        \hline
-        1 & 1110.1 & a\\
-        2 & 10.1 & b\\
-        3 & 23.113231 & c\\
-        4 & 25.113231 & d\\ % <-- added row here
-      \end{tabular}
-    \end{center}
-  \end{table}
+    The first part only includes the necessary packages, 
+    the second part has only two commands as well, where
+    \begin{verbatim} \pgfplotsset{compat=newest} \end{verbatim} 
+    disables the backward compatibility for pgfplots, so we can
+    place the legend of our graph below the plot and 
+    \textbackslash usepgfplotslibrary\{units\} adds two new
+    commands (x unit and y unit), which allows for nice formatting 
+    of units in brackets. Most parts from the last part should be 
+    self-explanatory. We have width, xlabel, ylabel and more. You
+    should comment them out and explore them on your own.
   \paragraph{}
-  Adding an additional column is also possible, but you have to be careful, because you have to add a column separator (\&) to every column:
+  The most important part is:
   \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \begin{table}[h!]
-      \begin{center}
-        \caption{More columns.}
-        \label{tab:table1}
-        \begin{tabular}{l|S|r|l}
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3} & \textbf{Value 4}\\ % <-- added & and content for each column
-          $\alpha$ & $\beta$ & $\gamma$ & $\delta$ \\ % <--
-          \hline
-          1 & 1110.1 & a & e\\ % <--
-          2 & 10.1 & b & f\\ % <--
-          3 & 23.113231 & c & g\\ % <--
-        \end{tabular}
-      \end{center}
-    \end{table}
-    
-    %...
+    ...
+            table[x=column 1,y=column 2,col sep=comma] {table.csv};
+    ...
   \end{lstlisting}
   \paragraph{}
-  We will now see an additional column in our output:
-  \begin{table}[h!]
-    \begin{center}
-      \caption{More columns.}
-      \label{tab:table1}
-      \begin{tabular}{l|S|r|l}
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3} & \textbf{Value 4}\\ % <-- added & and content for each column
-        $\alpha$ & $\beta$ & $\gamma$ & $\delta$ \\ % <--
-        \hline
-        1 & 1110.1 & a & e\\ % <--
-        2 & 10.1 & b & f\\ % <--
-        3 & 23.113231 & c & g\\ % <--
-      \end{tabular}
-    \end{center}
-  \end{table}
-
-  \subsection{Cells spanning multiple rows or multiple columns}
-    \begin{enumerate}[label=\alph*)]
-      \item Using multirow
-      \item Using multicolumn
-      \item Combining multirow and multicolumn
-    \end{enumerate}
-  \paragraph{}
-  Sometimes it's necessary to make a row span several cells. For this purpose we can use the multirow package, so the first thing we're going to do is adding the required package to our preamble:
-
+  Given a .csv file like:
   \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \usepackage{multirow} % Required for multirows
-    
-    \begin{document} 
-    
-    %...
-  \end{lstlisting}
-  \paragraph{}
-  We can now use multirow and multicolumn environments, which allow us to conveniently span multiple rows or columns.
-  
-
-
-  \subsubsection{Using multirow}
-  \paragraph{}
-  In order for a cell to span multiple rows, we have to use the multirow command. This command accepts three parameters:
-   
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    \multirow{NUMBER_OF_ROWS}{WIDTH}{CONTENT}
+    column 1,column 2
+    1,2
+    11.432,2342.23123123
   \end{lstlisting}
 
   \paragraph{}
-  % textsuperscript
-  I usually use an asterisk (\text{*}) as a parameter for the width,
-  since this basically means, that the width should be determined
-  automatically.
-
-  \paragraph{}
-  Because we're combining two rows in our example, it's necessary to omit the content of the same row in the following line. Let's look at how the actual LaTeX code would look like:
-
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \begin{table}[h!]
-      \begin{center}
-        \caption{Multirow table.}
-        \label{tab:table1}
-        \begin{tabular}{l|S|r}
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-          $\alpha$ & $\beta$ & $\gamma$ \\
-          \hline
-          \multirow{2}{*}{12} & 1110.1 & a\\ % <-- Combining 2 rows with arbitrary with (*) and content 12
-          & 10.1 & b\\ % <-- Content of first column omitted.
-          \hline
-          3 & 23.113231 & c\\
-          4 & 25.113231 & d\\
-        \end{tabular}
-      \end{center}
-    \end{table}
-    
-    %...
-  \end{lstlisting}
-  \paragraph{}
-  The modified table looks like this:
-  \begin{table}[h!]
-    \begin{center}
-      \caption{Multirow table.}
-      \label{tab:table1}
-      \begin{tabular}{l|S|r}
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-        $\alpha$ & $\beta$ & $\gamma$ \\
-        \hline
-        \multirow{2}{*}{12} & 1110.1 & a\\ % <-- Combining 2 rows with arbitrary with (*) and content 12
-        & 10.1 & b\\ % <-- Content of first column omitted.
-        \hline
-        3 & 23.113231 & c\\
-        4 & 25.113231 & d\\
-      \end{tabular}
-    \end{center}
-  \end{table}
-  \paragraph{}
-  You can now see, that the cell containing 12 spans two rows.
-
-
-  \subsubsection{Using multicolumn}
-  \paragraph{}
-  If we want a cell to span multiple columns, we have to use the multicolumn command. The usage differs a bit from multirow command, since we also have to specifiy the alignment for our column. The command also requires three parameters:
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    \multicolumn{NUMBER_OF_COLUMNS}{ALIGNMENT}{CONTENT}
-  \end{lstlisting}
-  \paragraph{}
-  In our example, we will again combine two neighboring cells, note that in the row where we're using multicolumn to span two columns, there's only one column separator (\&) (instead of two for all other rows):
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \begin{table}[h!]
-      \begin{center}
-        \caption{Multicolumn table.}
-        \label{tab:table1}
-        \begin{tabular}{l|S|r}
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-          $\alpha$ & $\beta$ & $\gamma$ \\
-          \hline
-          \multicolumn{2}{c|}{12} & a\\ % <-- Combining two cells with alignment c| and content 12.
-          \hline
-          2 & 10.1 & b\\
-          3 & 23.113231 & c\\
-          4 & 25.113231 & d\\
-        \end{tabular}
-      \end{center}
-    \end{table}
-    
-    %...
-  \end{lstlisting}
-  \paragraph{}
-  This will result in the following content:
-  \begin{table}[h!]
-    \begin{center}
-      \caption{Multicolumn table.}
-      \label{tab:table1}
-      \begin{tabular}{l|S|r}
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-        $\alpha$ & $\beta$ & $\gamma$ \\
-        \hline
-        \multicolumn{2}{c|}{12} & a\\ % <-- Combining two cells with alignment c| and content 12.
-        \hline
-        2 & 10.1 & b\\
-        3 & 23.113231 & c\\
-        4 & 25.113231 & d\\
-      \end{tabular}
-    \end{center}
-  \end{table}
-
-
-  \subsubsection{Combining multirow and multicolumn}
-  \paragraph{}
-  Of course it's also possible to combine the two features, to make a cell spanning multiple rows and columns. To do this, we simply use the multicolumn command and instead of specifying content, we add a multirow command as the content. We then have to add another multicolumn statement for as many rows as we're combining.
-  \paragraph{}
-  Because this is a little hard to explain, it will be much clearer when looking at the code. In this example, we're going to combine two columns and two rows, so we're getting a cell spanning a total of four cells:
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \begin{table}[h!]
-      \begin{center}
-        \caption{Multirow and -column table.}
-        \label{tab:table1}
-        \begin{tabular}{l|S|r}
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-          $\alpha$ & $\beta$ & $\gamma$ \\
-          \hline
-          \multicolumn{2}{c|}{\multirow{2}{*}{1234}} & a\\ % <-- Multicolumn spanning 2 columns, content multirow spanning two rows
-          \multicolumn{2}{c|}{} & b\\ % <-- Multicolumn spanning 2 columns with empty content as placeholder
-          \hline
-          3 & 23.113231 & c\\
-          4 & 25.113231 & d\\
-        \end{tabular}
-      \end{center}
-    \end{table}
-    
-    %...
-  \end{lstlisting}
-  \paragraph{}
-  Our document will now contain a table, with a huge cell:
-  \begin{table}[h!]
-    \begin{center}
-      \caption{Multirow and -column table.}
-      \label{tab:table1}
-      \begin{tabular}{l|S|r}
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-        $\alpha$ & $\beta$ & $\gamma$ \\
-        \hline
-        \multicolumn{2}{c|}{\multirow{2}{*}{1234}} & a\\ % <-- Multicolumn spanning 2 columns, content multirow spanning two rows
-        \multicolumn{2}{c|}{} & b\\ % <-- Multicolumn spanning 2 columns with empty content as placeholder
-        \hline
-        3 & 23.113231 & c\\
-        4 & 25.113231 & d\\
-      \end{tabular}
-    \end{center}
-  \end{table}
-
-
-
-  \subsection{Prettier tables with booktabs}
-  \paragraph{}
-  Of course beauty is always in the eye of the beholder, but I personally think, that the default hlines used by the table environment are not very pretty. For my tables, i always use the booktabs package, which provides much prettier horizontal separators and the usage is not harder compared to simply using hlines.
-  \paragraph{}
-  Again, we have to add the according booktabs package to our preamble:
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \usepackage{booktabs} % For prettier tables
-    
-    \begin{document} 
-    
-    %...
-  \end{lstlisting}
-  \paragraph{}
-  We can now replace the hlines in our example table with toprule, midrule and bottomrule provided by the booktabs package:
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \begin{table}[h!]
-      \begin{center}
-        \caption{Table using booktabs.}
-        \label{tab:table1}
-        \begin{tabular}{l|S|r}
-          \toprule % <-- Toprule here
-          \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-          $\alpha$ & $\beta$ & $\gamma$ \\
-          \midrule % <-- Midrule here
-          1 & 1110.1 & a\\
-          2 & 10.1 & b\\
-          3 & 23.113231 & c\\
-          \bottomrule % <-- Bottomrule here
-        \end{tabular}
-      \end{center}
-    \end{table}
-    
-    %...
-  \end{lstlisting}
-  \paragraph{}
-  You can decide for yourself, if you prefer the hlines or the following output:
-  \begin{table}[h!]
-    \begin{center}
-      \caption{Table using booktabs.}
-      \label{tab:table1}
-      \begin{tabular}{l|S|r}
-        \toprule % <-- Toprule here
-        \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
-        $\alpha$ & $\beta$ & $\gamma$ \\
-        \midrule % <-- Midrule here
-        1 & 1110.1 & a\\
-        2 & 10.1 & b\\
-        3 & 23.113231 & c\\
-        \bottomrule % <-- Bottomrule here
-      \end{tabular}
-    \end{center}
-  \end{table}
-
-
-  \subsection{Multipage tables}
-  \paragraph{}
-  If you have a lot of rows in your table, you will notice that by default, the table will be cropped at the bottom of the page, which is certainly not what you want. The package longtable provides a convenient way, to make tables span multiple pages. Of course we have to add the package to our preamble before we can start using it:
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-    %...
-
-    \usepackage{longtable} % To display tables on several pages
-    
-    \begin{document} 
-    
-    %...
-  \end{lstlisting}
-
-
-
-
-
-
-
-
-
-
-
-
-  \paragraph{}
-  ----------------The following code shows some example text and how t
-   
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-  ...
-  This is some example text\footnote{\label{myfootnote}Hello footnote}.
-  ...
-  \end{lstlisting}
-
-  \paragraph{}
-  ----------------The following code shows some example text and how t
-   
-  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
-  ...
-  This is some example text\footnote{\label{myfootnote}Hello footnote}.
-  ...
-  \end{lstlisting}
-
-
-
-
-
-
-
-
-
-
+  we have to put the name of one column for our x, in this case x=column 1 and a second column for our y, since there are only two columns, we choose y=column 2. Again, the col sep=comma indicates that we use comma as our column separator. We can copy the whole snippet as shown above and use it over and over again, we only have to change the columns we want to plot and the filename. There are a lot of options to style the plots and have bar charts and so forth. I will show a few more styles in a later tutorial or add an overview of snippets to the misc section.
 
   \paragraph{Summary}
     % list
     \begin{itemize} % list_type 有 enumerate、 itemize 和 description
-      \item Create footnotes with the \textbackslash footnote command and label them with \textbackslash label
-      \item Make sure that the label is contained within the braces of the footnote command
-      \item Use the \textbackslash ref command to refer to footnotes
+      \item Plotting is easy with pgfplots, it plots data directly from .csv files
+      \item Select a column by the actual name from the .csv file using table[x=column 1,y=column 2…
     \end{itemize} 
 
   \maketitle
