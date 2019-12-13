@@ -1,0 +1,183 @@
+% --------------------------------
+% -------  chapter 15  -----------
+% --------------------------------
+
+\maketitle
+\newpage
+\section{List - Enumerate and Itemize}
+  \textbf{
+    Learn how to use the enumerate and itemize environments to add ordered, unordered and nested lists to your document.
+  }
+  \begin{enumerate} % list_type 有 enumerate、 itemize 和 description
+    \item Unordered lists
+    \item Ordered lists
+    \item Nested lists
+    \item Changing the numbering / bullets
+  \end{enumerate} 
+  \paragraph{}
+  Using lists in LaTeX is pretty straightforward and doesn't require you do add any additional packages. For unordered lists, LaTeX provides the itemize environment and for ordered lists there is the enumerate environment. The elements within both environments have to be declared beginning with the \textbackslash item command. The following code examples show how to use the most common types of lists you're going to use in your document.
+  
+  \subsection{Unordered lists}
+  \paragraph{}
+  As I've mentioned above, unordered lists use the itemize environment and works without any additonal packages:
+
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    \begin{itemize}
+      \item One
+      \item Two
+      \item Three
+    \end{itemize}
+  \end{lstlisting}
+
+  \paragraph{}
+  This will generate the following output:
+  \begin{itemize}
+    \item One
+    \item Two
+    \item Three
+  \end{itemize}
+
+  \subsection{Ordered lists}
+  \paragraph{}
+  If you want to add an ordered list, you simply have to replace itemize with enumerated environment and LaTeX will take care of the enumeration for you:
+
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    \begin{enumerate}
+      \item One
+      \item Two
+      \item Three
+    \end{enumerate}
+  \end{lstlisting}
+
+  \paragraph{}
+  As you can see, LaTeX will automatically get the numbers right:
+  \begin{enumerate}
+    \item One
+    \item Two
+    \item Three
+  \end{enumerate}
+
+  \subsection{Nested lists}
+  \paragraph{}
+  Sometimes you also have to list things, which have some kind of sub-category. For this reason, LaTeX allows you to nest list environments and it will fix the indentation and numbering accordingly.
+
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    \begin{enumerate}
+      \item One
+        \begin{enumerate}
+          \item Two
+            \item Three
+            \item Four
+        \end{enumerate}
+        \item Five
+        \item Six
+    \end{enumerate}
+  \end{lstlisting}
+
+  \paragraph{}
+  This will generate the following output:
+  \begin{enumerate}
+    \item One
+      \begin{enumerate}
+        \item Two
+          \item Three
+          \item Four
+      \end{enumerate}
+      \item Five
+      \item Six
+  \end{enumerate}
+
+  \subsection{Changing the numbering / bullets}
+  \paragraph{}
+  Sometimes it's necessary to change the numbering scheme of a list, e.g. you want to use a different symbol and so forth. You can easily modify the output of the list.
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    %From bullet to dash
+    \item[--] or \item[$-$]
+    
+    % From bullet to asterisk
+    \item[$\ast$]
+    
+    %Use any math character
+    \item[$\CHARACTER$]
+  \end{lstlisting}
+  \paragraph{}
+  A full working code could look like this:
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    \begin{itemize}
+      \item[--] Dash
+      \item[$-$] Dash
+      \item[$\ast$] Asterisk
+    \end{itemize}
+  \end{lstlisting}
+  \paragraph{}
+  And the output will look as follows:
+  \begin{itemize}
+    \item[--] Dash
+    \item[$-$] Dash
+    \item[$\ast$] Asterisk
+  \end{itemize}
+  \paragraph{}
+  If you want to change the symbol for all items of the list, you should preferably use the enumitem environment, which I will explain using the example of ordered lists.
+
+  
+  \subsection{Ordered lists}
+  \paragraph{}
+  Changing this environment is a little more tricky, because there's a lot more logic involved and the easiest solution is probably using the enumerate or enumitem environments. I will use the enumerate environment for this purpose. So I will first add this environment to my preamble:
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    \documentclass{article}
+
+    % ...
+    
+    \usepackage{enumitem}
+    
+    \begin{document}
+  \end{lstlisting}
+  \paragraph{}
+  We can now use the following options on the enumerate environment:
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    %Roman numbers
+    \begin{enumerate}[label=(\roman*)]
+    %...
+    
+    % Arabic numbers
+    \begin{enumerate}[label=\arabic*)]
+    %...
+    
+    % Alphabetical
+    \begin{enumerate}[label=\alph*)]
+    %...
+  \end{lstlisting}
+  \paragraph{}
+  And the output will look as follows:
+  %Roman numbers
+  \begin{enumerate}[label=(\roman*)]
+    \item One
+    \item Two
+    \item Three
+  \end{enumerate}
+  % Arabic numbers
+  \begin{enumerate}[label=\arabic*)]
+        \item One
+        \item Two
+        \item Three
+    \end{enumerate}
+  % Alphabetical
+  \begin{enumerate}[label=\alph*)]
+      \item One
+      \item Two
+      \item Three
+  \end{enumerate}
+  \paragraph{}
+  Which will consistently change the symbol of all items:
+
+
+
+
+  \paragraph{Summary}
+    % list
+    \begin{itemize} % list_type 有 enumerate、 itemize 和 description
+      \item Unordered lists can be created using the itemize environment.
+      \item Ordered lists can be created using the enumerate environment.
+      \item Lists can be nested and will be aligned and enumerated properly.
+      \item Use the enumitem package to customize the symbols or enumeration.
+    \end{itemize} 

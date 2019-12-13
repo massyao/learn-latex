@@ -1,0 +1,93 @@
+% --------------------------------
+% -------  chapter 11  ------------
+% --------------------------------
+
+\maketitle
+\newpage
+\section{Highlight source code}
+  \textbf{
+    The listings package offers source code highlighting for various languages. Learn by example how to use it in your LaTeX documents. 
+  }
+  % \begin{enumerate} % list_type 有 enumerate、 itemize 和 description
+  %   \item Basic example
+  %   \item Syntax of tikz
+  % \end{enumerate} 
+
+  \subsection{Example}
+
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    \documentclass{article}
+
+    \usepackage{listings}
+    \usepackage{color}
+    
+    \renewcommand\lstlistingname{Quelltext} % Change language of section name
+    
+    \lstset{ % General setup for the package
+      language=Perl,
+      basicstyle=\small\sffamily,
+      numbers=left,
+       numberstyle=\tiny,
+      frame=tb,
+      tabsize=4,
+      columns=fixed,
+      showstringspaces=false,
+      showtabs=false,
+      keepspaces,
+      commentstyle=\color{red},
+      keywordstyle=\color{blue}
+    }
+    
+    \begin{document}
+    \begin{lstlisting}
+    #!/usr/bin/perl
+    print S(@ARGV);sub S{$r=(@_[0]%4==0&&@_[0]%100!=0)||@_[0]%400=0;}
+  \end{lstlisting}
+  \paragraph{}
+  The listings package is a powerful way to get nice source code highlighting in LaTeX. It's fairly easy to use and there's good documentation available on how to use it.
+  
+  \renewcommand\lstlistingname{Quelltext} % Change language of section name
+  \lstset{ % General setup for the package
+    language=Perl,
+    basicstyle=\small\sffamily,
+    numbers=left,
+     numberstyle=\tiny,
+    frame=tb,
+    tabsize=4,
+    columns=fixed,
+    showstringspaces=false,
+    showtabs=false,
+    keepspaces,
+    commentstyle=\color{red},
+    keywordstyle=\color{blue}
+  }
+  \begin{lstlisting}
+    #!/usr/bin/perl
+    print S(@ARGV);sub S{$r=(@_[0]%4==0&&@_[0]%100!=0)||@_[0]%400=0;}
+  \end{lstlisting}
+
+  \paragraph{}
+  I first use the include the color and listings 
+  package and then set up the language of the 
+  package headings to german using 
+  \begin{verbatim}
+    \renewcommand\lstlistingname{Quelltext}  
+  \end{verbatim}
+  . This is not necessary if you're planning to use it in English.
+  \paragraph{}
+  Afterwards I set up the general layout for the package with the \textbackslash lstset command. The options I set there should be self-explanatory. Note that it's required to manually set the colors for keywords and comments, otherwise the output would be only black on white. The desired output must then be embedded within a listings environment.
+  \paragraph{}
+  Assuming we have a Perl script saved in a file script.pl, we could also simply use the following syntax to get the same result:
+  \begin{lstlisting}
+    \lstinputlisting{script.pl}
+  \end{lstlisting}
+  \paragraph{}
+  This will keep your LaTeX source clean and you can still use all features of the package.
+  
+  \paragraph{Summary}
+    % list
+    \begin{itemize} % list_type 有 enumerate、 itemize 和 description
+      \item After some initial setup, all source code can be embedded in a lstlistings environment
+      \item A list of all languages and more documentation is available in the manual of the listings package
+      \item Use the \textbackslash lstlinputlisting\{FILENAME\} command to read the content of source files directly into a lstlistings environment.
+    \end{itemize} 

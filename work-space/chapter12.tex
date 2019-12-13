@@ -1,0 +1,157 @@
+% --------------------------------
+% -------  chapter 12  -----------
+% --------------------------------
+
+\maketitle
+\newpage
+\section{Circuit Diagrams}
+  \textbf{
+    Add neat circuit diagrams to your paper with circuitikz, extending tikz with electric components.
+  }
+  % \begin{enumerate} % list_type 有 enumerate、 itemize 和 description
+  %   \item Basic example
+  %   \item Syntax of tikz
+  % \end{enumerate} 
+
+  \paragraph{}
+  While Tikz offers many features and packages to create diagrams and all sorts of other drawings, it unfortunately lacks a good package to layout electric circuits. Using the package circuitikz we can easily solve this problem. It extends provides a new environment circuitikz in which we can easily draw our circuits in no time. The syntax is exactly the same as shown in the previous lesson, so we can directly start with a simple code example:
+
+  \begin{lstlisting}[language={[LaTeX]TeX},breaklines=true,frame=single]
+    \documentclass{article}
+
+    \usepackage{tikz}
+    \usepackage{circuitikz}
+    
+    \begin{document}
+    
+    \begin{figure}[h!]
+      \begin{center}
+        \begin{circuitikz}
+          \draw (0,0)
+          to[V,v=$U_q$] (0,2) % The voltage source
+          to[short] (2,2)
+          to[R=$R_1$] (2,0) % The resistor
+          to[short] (0,0);
+        \end{circuitikz}
+        \caption{My first circuit.}
+      \end{center}
+    \end{figure}
+    
+    \end{document}
+  \end{lstlisting}
+
+  \paragraph{}
+  This will create the following circuit diagram in our document:
+  \begin{figure}[h!]
+    \begin{center}
+      \begin{circuitikz}
+        \draw (0,0)
+        to[V,v=$U_q$] (0,2) % The voltage source
+        to[short] (2,2)
+        to[R=$R_1$] (2,0) % The resistor
+        to[short] (0,0);
+      \end{circuitikz}
+      \caption{My first circuit.}
+    \end{center}
+  \end{figure}
+
+  \paragraph{}
+  The circuit will be drawn in the same way as a path in tikz, but we specify special options for the elements:
+  \begin{lstlisting}
+    \draw (0,0)
+    to[V,v=$U_q$] (0,2) % The voltage source
+  \end{lstlisting}
+  \paragraph{}
+  Starting at (0,0) we will draw a voltage source specifying the [V,v=Uq] options to the coordinates (0,2), where V chooses the symbol for a voltage source and the v=Uq draws the voltage arrow next to it. Then we proceed to the resistor:
+  \begin{lstlisting}
+    to[short] (2,2)
+    to[R=$R_1$] (2,0) % The resistor
+  \end{lstlisting}
+  \paragraph{}
+  We first must draw a short circuit from (0,2) to (2,2) and then put the resistor symbol on the path from (2,2) to (2,0) note that this time the label of the element must be specified directly (R=R1).
+  \begin{lstlisting}
+    \lstinputlisting{script.pl}
+  \end{lstlisting}
+  \paragraph{}
+  A list of all available elements for circuits is available in the circuitikz manual.
+  \paragraph{}
+  But how can we add more elements to the circuit? Let's say we want to add an inductor parallel to the Resistor. The easiest way is to add a new draw command like this:
+  \begin{lstlisting}
+    \begin{circuitikz}
+      \draw (0,0)
+      to[V,v=$U_q$] (0,2) % The voltage source
+      to[short] (2,2)
+      to[R=$R_1$] (2,0) % The resistor
+      to[short] (0,0);
+      \draw (2,2)
+      to[short] (4,2)
+      to[L=$L_1$] (4,0)
+      to[short] (2,0);
+   \end{circuitikz}
+  \end{lstlisting}
+  \paragraph{}
+  After compilation we'd get the following circuit diagram:
+  \paragraph{}
+  \begin{circuitikz}
+    \draw (0,0)
+    to[V,v=$U_q$] (0,2) % The voltage source
+    to[short] (2,2)
+    to[R=$R_1$] (2,0) % The resistor
+    to[short] (0,0);
+    \draw (2,2)
+    to[short] (4,2)
+    to[L=$L_1$] (4,0)
+    to[short] (2,0);
+  \end{circuitikz} 
+  \paragraph{}
+  Adding a capacitor next to it, is just as simple:
+  \paragraph{}
+  \begin{lstlisting}
+    \begin{circuitikz}
+      \draw (0,0)
+      to[V,v=$U_q$] (0,2) % The voltage source
+      to[short] (2,2)
+      to[R=$R_1$] (2,0) % The resistor
+      to[short] (0,0);
+      \draw (2,2)
+      to[short] (4,2)
+      to[L=$L_1$] (4,0)
+      to[short] (2,0);
+      \draw (4,2)
+      to[short] (6,2)
+      to[C=$C_1$] (6,0)
+      to[short] (4,0);
+   \end{circuitikz}
+  \end{lstlisting}
+  \paragraph{}
+  This would give us the following diagram:
+  \paragraph{}
+  \begin{circuitikz}
+    \draw (0,0)
+    to[V,v=$U_q$] (0,2) % The voltage source
+    to[short] (2,2)
+    to[R=$R_1$] (2,0) % The resistor
+    to[short] (0,0);
+    \draw (2,2)
+    to[short] (4,2)
+    to[L=$L_1$] (4,0)
+    to[short] (2,0);
+    \draw (4,2)
+    to[short] (6,2)
+    to[C=$C_1$] (6,0)
+    to[short] (4,0);
+  \end{circuitikz}
+  \paragraph{}
+  The circuitikz manual provides examples of all symbols and functions and can also be used for further reference.\
+
+
+
+
+
+  \paragraph{Summary}
+    % list
+    \begin{itemize} % list_type 有 enumerate、 itemize 和 description
+      \item Circuitikz provides an environment to draw electric circuit diagrams
+      \item The syntax is similar to the plain Tikz syntax
+      \item A list of all symbols is available in the circutikz manual
+    \end{itemize} 
