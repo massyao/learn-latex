@@ -2,7 +2,6 @@
 *.gz
 *.aux
 *.log
-*.pdf
 latex-quick-start-tutorial.run.xml
 latex-quick-start-tutorial-blx.bib
 latex-quick-start-tutorial.out
